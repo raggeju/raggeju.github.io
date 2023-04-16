@@ -1,0 +1,267 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <style>
+      body {
+        margin: 0px;
+        padding: 0px;
+      }
+    </style>
+    <title>Ziggyfy yourself!</title>
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
+  </head>
+  <body onmousedown="return false;">
+
+    <input type="file" id="imageLoader" name="imageLoader"/>
+    <button id='addImg' value="Upload" >Upload</button><br>
+    Image scale:
+    <button id="minusScale">-</button>
+    <button id="plusScale">+</button>
+    <button id="rotateImage">Rotate Image</button>
+
+    <div id="container"></div>
+
+    <script src="kinetic-v5.1.0.min.js"></script>
+
+    <script>
+        var anchors = [];
+
+        function update(activeAnchor) {
+          var group = activeAnchor.getParent();
+          var topLeft = group.find('.topLeft')[0];
+          var topRight = group.find('.topRight')[0];
+          var bottomRight = group.find('.bottomRight')[0];
+          var bottomLeft = group.find('.bottomLeft')[0];
+          var image = group.find('.image')[0];
+          var anchorX = activeAnchor.x();
+          var anchorY = activeAnchor.y();
+
+          switch (activeAnchor.name()) {
+            case 'topLeft':
+              topRight.y(anchorY);
+              bottomLeft.x(anchorX);
+              break;
+            case 'topRight':
+              topLeft.y(anchorY);
+              bottomRight.x(anchorX);
+              break;
+            case 'bottomRight':
+              bottomLeft.y(anchorY);
+              topRight.x(anchorX); 
+              break;
+            case 'bottomLeft':
+              bottomRight.y(anchorY);
+              topLeft.x(anchorX); 
+              break;
+          }
+          image.setPosition(topLeft.getPosition());
+          var width = topRight.x() - topLeft.x();
+          var height = bottomLeft.y() - topLeft.y();
+          if(width && height) {
+            image.setSize({width:width, height: height});
+          }
+        }
+
+        function addAnchor(group, x, y, name) {
+          window.stage = group.getStage();
+          var layer = group.getLayer();
+          var anchor = new Kinetic.Circle({
+            x: x,
+            y: y,
+            stroke: '#666',
+            fill: '#ddd',
+            strokeWidth: 2,
+            radius: 8,
+            name: name,
+            draggable: true,
+            dragOnTop: false
+          });
+          anchors.push(anchor);
+          anchor.on('dragmove', function() {
+            update(this);
+            layer.draw();
+          });
+          anchor.on('mousedown touchstart', function() {
+            group.setDraggable(false);
+            this.moveToTop();
+          });
+          anchor.on('dragend', function() {
+            group.setDraggable(true);
+            layer.draw();
+          });
+          anchor.on('mouseover', function() {
+            var layer = this.getLayer();
+            document.body.style.cursor = 'pointer';
+            this.setStrokeWidth(4);
+            layer.draw();
+          });
+          anchor.on('mouseout', function() {
+            var layer = this.getLayer();
+            document.body.style.cursor = 'default';
+            this.strokeWidth(2);
+            layer.draw();
+          });
+          group.add(anchor);
+        }
+
+        function loadImages(sources, callback) {
+          var images = {};
+          var loadedImages = 0;
+          var numImages = 0;
+          for(var src in sources) {
+            numImages++;
+          }
+          for(var src in sources) {
+            images[src] = new Image();
+            images[src].onload = function() {
+              if(++loadedImages >= numImages) {
+                callback(images);
+              }
+            };
+            images[src].src = sources[src];
+          }
+        }
+
+        function initStage(images) {
+          var stage = new Kinetic.Stage({
+            container: 'container',
+            width: 400,
+            height: 400
+          });
+          window.darthGroup = new Kinetic.Group({
+            x: 0,
+            y: 0,
+            draggable: true
+          });
+          var yodaGroup = new Kinetic.Group({
+            x: 100,
+            y: 110,
+            draggable: true
+          });
+          window.layer = new Kinetic.Layer();
+
+          layer.add(darthGroup);
+          layer.add(yodaGroup);
+          stage.add(layer);
+
+          var yodaImg = new Kinetic.Image({
+            x: 0,
+            y: 0,
+            image: images.yoda,
+            width: 93,
+            height: 104,
+            name: 'image'
+          });
+          yodaImg.setOpacity(0.3);
+
+          yodaGroup.add(yodaImg);
+          addAnchor(yodaGroup, 0, 0, 'topLeft');
+          addAnchor(yodaGroup, 93, 0, 'topRight');
+          addAnchor(yodaGroup, 93, 104, 'bottomRight');
+          addAnchor(yodaGroup, 0, 104, 'bottomLeft');
+
+          yodaGroup.on('dragstart', function() {
+            this.moveToTop();
+          });
+
+          stage.draw();
+        }
+
+        var sources = {
+          yoda: 'blixt2.png'
+        };
+        loadImages(sources, initStage);
+
+
+
+
+
+
+        function calculateAspectRatioFit(srcWidth, srcHeight, maxWidth, maxHeight) {
+          var ratio = Math.min(maxWidth / srcWidth, maxHeight / srcHeight);
+          return { width: srcWidth*ratio, height: srcHeight*ratio };
+        }
+
+
+
+
+
+        window.onload = function(){ 
+          window.canvas = document.getElementsByTagName('canvas')[0];
+          canvas.style.border = "solid thin black";
+          var ctx = window.layer.getCanvas().getContext();
+          var imageLoader = document.getElementById('imageLoader');
+          
+          function addImage(){
+
+            var imageObj = new Image();
+            imageObj.onload = function() {
+              var myImage = new Kinetic.Image({
+                image: imageObj
+              });
+              var o = calculateAspectRatioFit(imageObj.width, imageObj.height, 4000, canvas.height);
+              myImage.setWidth(o.width);
+              myImage.setHeight(o.height);
+              myImage.offsetX(o.width / 2);
+              myImage.offsetY(o.height / 2);
+              console.log("blaha:", myImage.offset());
+
+              document.getElementById("minusScale").addEventListener("click", function(){
+                var s = darthGroup.scale();
+                console.log(s);
+                darthGroup.setScale({x:s.x-.1, y:s.y-.1});
+                window.layer.draw();
+              });
+              document.getElementById("plusScale").addEventListener("click", function(){
+                var s = darthGroup.scale();
+                console.log(s);
+                darthGroup.setScale({x:s.x+.1, y:s.y+.1});
+                window.layer.draw();
+              });
+              document.getElementById("rotateImage").addEventListener("click", function(){
+                darthGroup.rotateDeg(90);
+                window.layer.draw();
+              })
+
+              darthGroup.add(myImage);
+              window.layer.draw();
+            }  
+
+            var f = document.getElementById('imageLoader').files[0];
+            var name = f.name;
+            var url = window.URL;
+            var src = url.createObjectURL(f);
+
+            imageObj.src = src;
+
+
+          }
+
+          document.getElementById("addImg").addEventListener("click", function(){
+            addImage();
+          });
+
+
+          function downloadCanvas(link, canvasId, filename) {
+              anchors.forEach(function(anchor, key){
+                anchor.setOpacity(0);
+              });
+              window.layer.draw();
+              link.href = document.getElementsByTagName("canvas")[0].toDataURL();
+              link.download = filename;
+              anchors.forEach(function(anchor, key){
+                anchor.setOpacity(1);
+              });
+          }
+          document.getElementById('download').addEventListener('click', function() {
+              downloadCanvas(this, 'canvas', 'ziggyfied.png');
+          }, false);
+
+        };
+
+    </script>
+
+    <a href="#" id="download">Download</a>
+
+  </body>
+</html>      
