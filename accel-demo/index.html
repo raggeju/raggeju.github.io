@@ -21,8 +21,8 @@
         // Add a listener to get smartphone acceleration 
             // in the XYZ axes (units in m/s^2)
             window.addEventListener('devicemotion', (event) => {
-                console.log(event.acceleration.x);
-                console.log(event.acceleration.y);
+                console.log(event.acceleration.x.valueOf());
+                console.log(event.acceleration.y.valueOf());
             });
        // Add a listener to get smartphone orientation 
            // in the alpha-beta-gamma axes (units in degrees)
