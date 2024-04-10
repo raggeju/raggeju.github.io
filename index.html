@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>raggeju.github.io</title>
-    <script src="create-element.js" type="text/javascript"></script>
+    <script src="assets/create-element.js" type="text/javascript"></script>
     <script>
       class PopupInfo extends HTMLElement {
         constructor() {
@@ -17,7 +17,7 @@
           const shadow = this.attachShadow({ mode: "open" });
 
           // Create spans
-          cewa("span", { class: "wrapper" });
+          const wrapper = cewa("span", { class: "wrapper" });
           const icon = cewa("span", { class: "icon", tabindex: 0 });
           const info = cewa("span", { class: "info" });
 
@@ -36,36 +36,35 @@
           const img = cewa("img", { src: imgUrl });
           icon.appendChild(img);
 
-          const style = cewa("style", {
-            textContent: `
-.wrapper {
-  position: relative;
-}
+          const style = cewa("style");
+          style.textContent = `
+      .wrapper {
+        position: relative;
+      }
 
-.info {
-  font-size: 0.8rem;
-  width: 200px;
-  display: inline-block;
-  border: 1px solid black;
-  padding: 10px;
-  background: white;
-  border-radius: 10px;
-  opacity: 0;
-  transition: 0.6s all;
-  position: absolute;
-  top: 20px;
-  left: 10px;
-  z-index: 3;
-}
+      .info {
+        font-size: 0.8rem;
+        width: 200px;
+        display: inline-block;
+        border: 1px solid black;
+        padding: 10px;
+        background: white;
+        border-radius: 10px;
+        opacity: 0;
+        transition: 0.6s all;
+        position: absolute;
+        top: 20px;
+        left: 10px;
+        z-index: 3;
+      }
 
-img {
-  width: 1.2rem;
-}
+      img {
+        width: 1.2rem;
+      }
 
-.icon:hover + .info, .icon:focus + .info {
-  opacity: 1;
-}`,
-          });
+      .icon:hover + .info, .icon:focus + .info {
+        opacity: 1;
+      }`;
 
           // Attach the created elements to the shadow dom
           shadow.appendChild(style);
