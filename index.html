@@ -4,8 +4,86 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>raggeju.github.io</title>
+    <script src="create-element.js" type="text/javascript"></script>
+    <script>
+      class PopupInfo extends HTMLElement {
+        constructor() {
+          // Always call super first in constructor
+          super();
+        }
+
+        connectedCallback() {
+          // Create a shadow root
+          const shadow = this.attachShadow({ mode: "open" });
+
+          // Create spans
+          cewa("span", { class: "wrapper" });
+          const icon = cewa("span", { class: "icon", tabindex: 0 });
+          const info = cewa("span", { class: "info" });
+
+          // Take attribute content and put it inside the info span
+          const text = this.getAttribute("data-text");
+          info.textContent = text;
+
+          // Insert icon
+          let imgUrl;
+          if (this.hasAttribute("img")) {
+            imgUrl = this.getAttribute("img");
+          } else {
+            imgUrl = "img/default.png";
+          }
+
+          const img = cewa("img", { src: imgUrl });
+          icon.appendChild(img);
+
+          const style = cewa("style", {
+            textContent: `
+.wrapper {
+  position: relative;
+}
+
+.info {
+  font-size: 0.8rem;
+  width: 200px;
+  display: inline-block;
+  border: 1px solid black;
+  padding: 10px;
+  background: white;
+  border-radius: 10px;
+  opacity: 0;
+  transition: 0.6s all;
+  position: absolute;
+  top: 20px;
+  left: 10px;
+  z-index: 3;
+}
+
+img {
+  width: 1.2rem;
+}
+
+.icon:hover + .info, .icon:focus + .info {
+  opacity: 1;
+}`,
+          });
+
+          // Attach the created elements to the shadow dom
+          shadow.appendChild(style);
+          shadow.appendChild(wrapper);
+          wrapper.appendChild(icon);
+          wrapper.appendChild(info);
+        }
+      }
+
+      customElements.define("popup-info", PopupInfo);
+    </script>
   </head>
   <body>
-    raggeju.github.io
+    <popup-info
+      img="assets/MainAfter.webp"
+      data-text="Your card validation code (CVC)
+  is an extra security feature — it is the last 3 or 4 numbers on the
+  back of your card."
+    ></popup-info>
   </body>
 </html>
