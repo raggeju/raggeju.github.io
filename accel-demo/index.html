@@ -38,13 +38,10 @@
       let vy = 0.0;
       let updateRate = 1 / 60; // Sensor refresh rate
 
-      const strongText = document.querySelector("strong");
-
       function getAccel() {
+        const strongText = document.querySelector("strong");
         DeviceMotionEvent.requestPermission().then((response) => {
           if (response == "granted") {
-            strongText.innerText = `x:${px}, y:${py}, vx:${vx}, vy:${vy}`;
-
             // Add a listener to get smartphone orientation
             // in the alpha-beta-gamma axes (units in degrees)
             window.addEventListener("deviceorientation", (event) => {
@@ -73,6 +70,7 @@
 
               dot = document.getElementsByClassName("indicatorDot")[0];
               dot.setAttribute("style", "left:" + px + "%;" + "top:" + py + "%;");
+              strongText.innerText = `x:${px}, y:${py}, vx:${vx}, vy:${vy}`;
             });
           }
         });
@@ -82,7 +80,7 @@
   <body style="background-color: lightblue">
     <button id="accelPermsButton" style="height: 50px" onclick="getAccel()">
       <h1>Get Accelerometer Permissions</h1>
-      <strong>there:</strong>
+      <strong></strong>
     </button>
     <div class="indicatorDot" style="left: 30%; top: 30%"></div>
   </body>
