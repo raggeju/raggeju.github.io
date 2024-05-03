@@ -43,11 +43,7 @@
       function getAccel() {
         DeviceMotionEvent.requestPermission().then((response) => {
           if (response == "granted") {
-            const acl = new Accelerometer({ frequency: 60 });
-            acl.addEventListener("reading", () => {
-              strongText.innerText = `x: ${acl.x}, y: ${acl.y}, z: ${acl.z}`;
-            });
-            acl.start();
+            strongText.innerText = `x:${px}, y:${py}, vx:${vx}, vy:${vy}`;
 
             // Add a listener to get smartphone orientation
             // in the alpha-beta-gamma axes (units in degrees)
