@@ -21,14 +21,12 @@
           if (response == "granted") {
             // Add a listener to get smartphone acceleration
             // in the XYZ axes (units in m/s^2)
-            window.addEventListener("devicemotion", (event) => {
-              indicatorDot.clientLeft = event.acceleration.x.valueOf();
-              indicatorDot.clientTop = event.acceleration.y.valueOf();
-            });
+            window.addEventListener("devicemotion", (event) => {});
             // Add a listener to get smartphone orientation
             // in the alpha-beta-gamma axes (units in degrees)
             window.addEventListener("deviceorientation", (event) => {
-              // console.log(event.);
+              indicatorDot.clientLeft = event.acceleration.x.valueOf();
+              indicatorDot.clientTop = event.acceleration.y.valueOf();
             });
           }
         });
@@ -38,6 +36,7 @@
   <body style="background-color: lightblue">
     <button id="accelPermsButton" style="height: 50px" onclick="getAccel()">
       <h1>Get Accelerometer Permissions</h1>
+      asdf
     </button>
     <div class="indicatorDot" style="left: 30%; top: 30%"></div>
   </body>
