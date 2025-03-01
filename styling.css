@@ -1,0 +1,86 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap");
+
+* {
+  margin: 5px 0;
+}
+
+body {
+  font-size: 16px;
+  font-family: "Roboto Mono", monospace;
+  font-style: normal;
+  background-color: #353535;
+  color: white;
+  padding: 20px;
+  margin: 0;
+}
+
+a,
+a:link,
+a:hover,
+a:active {
+  color: #90d9f9;
+}
+
+.wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 20px;
+}
+
+h1 {
+  font-size: 1.5rem;
+  margin-top: 0;
+}
+
+h2 {
+  font-size: 1.25rem;
+}
+h3 {
+  text-transform: uppercase;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.bold-text {
+  font-weight: 500;
+}
+.small-text {
+  font-size: 0.875rem;
+}
+.align-right {
+  text-align: right;
+}
+.spacer {
+  height: 50px;
+}
+.spacer-2 {
+  margin-bottom: 20px;
+}
+.tag {
+  color: black;
+}
+
+.react-tag {
+  background-color: #90d9f9;
+}
+.vue-tag {
+  background-color: #74b785;
+}
+.typescript-tag {
+  background-color: #4e77c2;
+}
+.angular-tag {
+  background-color: #be201c;
+}
+.ruby-tag {
+  background-color: #961b02;
+}
+.node-tag {
+  background-color: #3f6d1a;
+}
+.php-tag {
+  background-color: #8a91bc;
+}
