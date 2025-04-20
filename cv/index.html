@@ -7,127 +7,131 @@
     <title>Curriculum Vitae for Ragnar Axberg</title>
     <link href="../styling.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    <script src="../assets/data/workplaces.js"></script>
-    <script src="../assets/data/educations.js"></script>
+    <script src="../assets/src/data/workplaces.js"></script>
+    <script src="../assets/src/data/educations.js"></script>
+    <script src="../assets/src/data/my-info.js"></script>
   </head>
   <body>
-    <h1 class="bold-text spacer-2">Curriculum Vitae for Ragnar Axberg</h1>
-    <span class="spacer">&nbsp;</span><span class="spacer">&nbsp;</span>
-    <div class="wrapper">
-      <h2 class="bold-text spacer-2 align-right">General Information</h2>
-      <span></span>
-      <h3 class="small-text align-right">About</h3>
-      <p class="about-me"></p>
-      <span></span>
-      <span></span>
-      <h3 class="small-text align-right">Telephone</h3>
-      <p class="small-text"><a href="tel:0046708991988">+46 708 99 19 88</a></p>
-      <h3 class="small-text align-right">Email</h3>
-      <p class="small-text">
-        <a href="mailto:ragnar.axberg@icloud.com">ragnar.axberg@icloud.com</a>
-      </p>
-      <h3 class="small-text align-right">Nationality</h3>
-      <p class="small-text">Swedish</p>
-      <h3 class="small-text align-right">Date of Birth</h3>
-      <p class="small-text">1988-02-18</p>
-      <h3 class="small-text align-right">Gender</h3>
-      <p class="small-text">Male</p>
-      <h3 class="small-text align-right">Home town</h3>
-      <p class="small-text">
-        <a href="https://youtu.be/F9urjA_xdfc?t=1295" target="_blank">Gothenburg, Sweden</a>
-      </p>
-      <span>&nbsp;</span><span>&nbsp;</span>
-      <h2 class="bold-text spacer-2 align-right">Work Experience</h2>
-      <span></span>
-      <h3 class="small-text align-right">Previous Roles</h3>
-      <ul>
-        <li class="spacer-2 small-text">Front End Developer</li>
-        <li class="spacer-2 small-text">Web Designer</li>
-        <li class="spacer-2 small-text">Flash Developer</li>
-        <li class="spacer-2 small-text">UX Developer</li>
-        <li class="spacer-2 small-text">Full stack Developer</li>
-        <li class="spacer-2 small-text">Scrum Master</li>
-      </ul>
-      <h2 class="bold-text spacer-2 align-right">Selection of previous jobs</h2>
-      <span class="workplaces"></span>
-      <h2 class="bold-text spacer-2 align-right">
-        <a
-          href="https://www.linkedin.com/in/ragnar-axberg-svensson-a72a7b2a/details/experience"
-          target="_blank"
-          >Older jobs...</a
-        >
-      </h2>
-      <span></span>
-      <span class="spacer">&nbsp;</span><span class="spacer">&nbsp;</span>
-      <h2 class="bold-text spacer-2 align-right">Education</h2>
-      <span class="educations"></span>
-    </div>
-
     <script>
       document.addEventListener("DOMContentLoaded", () => {
-        document.querySelector(".about-me").outerHTML = marked.parse(`
-Inventive since 1988. Creative professional since 2008. In recent years focused on the **Front
-End web**. Before working professionally, studied a 2 year polytechnic called “Web Developer”
-at Yrgo in Gothenburg. Passionate about the web and apps but also other digital media, such
-as music, movies and games.
-        `);
-        educations.reverse().map(({ course, school, from, to }) => {
-          document.querySelector(".educations").outerHTML += `
-            <h3 class="small-text align-right">Course / Program</h3>
-            <p class="small-text">${course}</p>
-            <h3 class="small-text align-right">School</h3>
-            <p class="small-text">${school}</p>
-            <h3 class="small-text align-right">Years</h3>
-            <p class="small-text">${from}${to !== from ? ` - ${to}` : ""}</p>
-            <span class="spacer-2">&nbsp;</span><span class="spacer-2">&nbsp;</span>
-          `;
-        });
+        const languages = myInfo.languages.map((lang) => ({
+          name: new Intl.DisplayNames([lang.code], { type: "language" }),
+          level: lang.level === "basic-understanding" ? "Basic understanding" : "Fluent",
+        }));
 
-        workplaces
-          .reverse()
-          .map(({ position, employer, client, from, to, about, technologies }) => {
-            const toString = to === "Present" ? `<span class="present-tag">${to}</span>` : to;
-            let technologiesString = "";
-            technologies?.map((t, index) => {
-              switch (t) {
-                case "React":
-                  technologiesString += `<span class="react-tag tag">React</span>`;
-                  break;
-                case "Vue":
-                  technologiesString += `<span class="vue-tag tag">Vue.js</span>`;
-                  break;
-                case "AngularJS":
-                  technologiesString += `<span class="angular-tag">AngularJS</span>`;
-                  break;
-                case "TypeScript":
-                  technologiesString += `<span class="typescript-tag">TypeScript</span>`;
-                  break;
-                case "PHP":
-                  technologiesString += `<span class="php-tag tag">PHP</span>`;
-                  break;
-                default:
-                  technologiesString += t;
-              }
-              technologiesString += index !== technologies.length - 1 ? ", " : "";
-            });
+        document.querySelector("body").innerHTML = `
+          <h1 class="bold-text spacer-2">Curriculum Vitae for Ragnar Axberg</h1>
+          <span class="spacer">&nbsp;</span><span class="spacer">&nbsp;</span>
+          <div class="wrapper">
+            <h2 class="bold-text spacer-2 align-right">General information</h2>
+            <span></span>
+            <h3 class="small-text align-right">About</h3>
+            ${marked.parse(myInfo.about)}
+            <span></span>
+            <span></span>
+            <h3 class="small-text align-right">Telephone</h3>
+            <p class="small-text"><a href="tel:${myInfo.telephone}">${myInfo.telephone}</a></p>
+            <h3 class="small-text align-right">Email</h3>
+            <p class="small-text">
+              <a href="mailto:${myInfo.email}">${myInfo.email}</a>
+            </p>
+            <h3 class="small-text align-right">Nationality</h3>
+            <p class="small-text">${myInfo.nationality}</p>
 
-            document.querySelector(".workplaces").outerHTML += `
-            <h3 class="small-text align-right">Dates</h3>
-            <p class="small-text">${from} - ${toString}</p>
-            <h3 class="small-text align-right">Position</h3>
-            <p class="small-text">${position}</p>
-            <h3 class="small-text align-right">Responsibilities</h3>
-            ${marked.parse(about)}
-            ${
-              technologies && technologies?.length > 0
-                ? `<h3 class="small-text align-right">Technologies</h3><p class="small-text">${technologiesString}</p>`
-                : ""
-            }
-            <h3 class="small-text align-right">${employer ? "Employer" : "Client"}</h3>
-            <p class="small-text">${employer ?? client}</p>
+            <h3 class="small-text align-right">Date of Birth</h3>
+            <p class="small-text">${
+              new Date(myInfo.timestamp * 1000).toISOString().split("T")[0]
+            }</p>
+            <h3 class="small-text align-right">Gender</h3>
+            <p class="small-text">${myInfo.gender}</p>
+            <h3 class="small-text align-right">Home town</h3>
+            <p class="small-text">
+              <a href="https://youtu.be/F9urjA_xdfc?t=1295" target="_blank">${myInfo.city}</a>
+            </p>
+            <span>&nbsp;</span><span>&nbsp;</span>
+            <h2 class="bold-text spacer-2 align-right">Work experience</h2>
+            <span></span>
+            <h3 class="small-text align-right">Previous Roles</h3>
+            <ul>
+              ${myInfo.roles.map((role) => `<li class="spacer-2 small-text">${role}</li>`).join("")}
+            </ul>
+            <h2 class="bold-text spacer-2 align-right">Selection of previous jobs</h2>
+            <span></span>
+            ${workplaces
+              .reverse()
+              .map(({ position, employer, client, from, to, about, technologies }) => {
+                const toString = to === "Present" ? `<span class="present-tag">${to}</span>` : to;
+                let technologiesString = "";
+
+                technologies?.map((t, index) => {
+                  switch (t) {
+                    case "React":
+                      technologiesString += `<span class="react-tag tag">React</span>`;
+                      break;
+                    case "Vue":
+                      technologiesString += `<span class="vue-tag tag">Vue.js</span>`;
+                      break;
+                    case "AngularJS":
+                      technologiesString += `<span class="angular-tag">AngularJS</span>`;
+                      break;
+                    case "TypeScript":
+                      technologiesString += `<span class="typescript-tag">TypeScript</span>`;
+                      break;
+                    case "PHP":
+                      technologiesString += `<span class="php-tag tag">PHP</span>`;
+                      break;
+                    default:
+                      technologiesString += t;
+                  }
+                  technologiesString += index !== technologies.length - 1 ? ", " : "";
+                });
+
+                return `
+                  <h3 class="small-text align-right">Dates</h3>
+                  <p class="small-text">${from} - ${toString}</p>
+                  <h3 class="small-text align-right">Position</h3>
+                  <p class="small-text">${position}</p>
+                  <h3 class="small-text align-right">Responsibilities</h3>
+                  ${marked.parse(about)}
+                  ${
+                    technologies && technologies?.length > 0
+                      ? `<h3 class="small-text align-right">Technologies</h3><p class="small-text">${technologiesString}</p>`
+                      : ""
+                  }
+                  <h3 class="small-text align-right">${employer ? "Employer" : "Client"}</h3>
+                  <p class="small-text">${employer ?? client}</p>
+                  <span class="spacer">&nbsp;</span><span class="spacer">&nbsp;</span>
+                `;
+              })
+              .join("")}
+            <h2 class="bold-text spacer-2 align-right">
+              <a
+                href="https://www.linkedin.com/in/ragnar-axberg-svensson-a72a7b2a/details/experience"
+                target="_blank"
+                >Older jobs...</a
+              >
+            </h2>
+            <span></span>
             <span class="spacer">&nbsp;</span><span class="spacer">&nbsp;</span>
+            <h2 class="bold-text spacer-2 align-right">Education</h2>
+            <span></span>
+            ${educations
+              .reverse()
+              .map(
+                ({ course, school, from, to }) => `
+                <h3 class="small-text align-right">Course / Program</h3>
+                <p class="small-text">${course}</p>
+                <h3 class="small-text align-right">School</h3>
+                <p class="small-text">${school}</p>
+                <h3 class="small-text align-right">Years</h3>
+                <p class="small-text">${from}${to !== from ? ` - ${to}` : ""}</p>
+                <span class="spacer-2">&nbsp;</span><span class="spacer-2">&nbsp;</span>
+              `
+              )
+              .join("")}
+          </div>
+
           `;
-          });
       });
     </script>
   </body>

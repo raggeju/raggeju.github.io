@@ -1,4 +1,4 @@
-const places = [
+const placesOfInterest = [
   {
     categories: ["hotel", "bar"],
     name: "Hotel Born Palma",

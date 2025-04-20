@@ -4,24 +4,28 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>raggeju.github.io</title>
-    <script src="assets/helpers.js" type="text/javascript"></script>
-    <script src="assets/custom-elements/popup-info.js"></script>
-    <script src="assets/custom-elements/template.js"></script>
+    <script src="assets/src/data/my-info.js" type="text/javascript"></script>
+    <script src="assets/src/routes.js" type="text/javascript"></script>
     <link href="styling.css" rel="stylesheet" />
   </head>
   <body>
-    <h1>Ragnar Axberg</h1>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        document.querySelector("body").innerHTML = `
+          <h1>${myInfo.names[1]} ${myInfo.names[3]}</h1>
 
-    <details>
-      <summary>Full name</summary>
-      <p>Nils Ragnar Mauritz Axberg Svensson</p>
-    </details>
+          <details>
+            <summary>Full name</summary>
+            <p>${myInfo.names.join(" ")}</p>
+          </details>
 
-    <nav>
-      <ul>
-        <li><a href="./cv/index.html">cv</a></li>
-        <li><a href="./ziggyfy/index.html">ziggyfy</a></li>
-      </ul>
-    </nav>
+          <nav>
+            <ul>
+              ${routes.map((r) => `<li><a href="${r.route}">${r.name}</a></li>`).join("")}
+            </ul>
+          </nav>
+        `;
+      });
+    </script>
   </body>
 </html>

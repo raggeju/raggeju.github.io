@@ -3,5 +3,3 @@ const bookmarks = [
   "https://asdfadsfasdfasdf.se",
   "https://russmaxdesign.github.io/accessible-error-fieldset/",
 ];
-
-export default bookmarks;
