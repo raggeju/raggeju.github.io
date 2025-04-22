@@ -58,7 +58,6 @@
             <h2 class="bold-text spacer-2 align-right">Selection of previous jobs</h2>
             <span></span>
             ${workplaces
-              .reverse()
               .map(({ position, employer, client, from, to, about, technologies }) => {
                 const toString = to === "Present" ? `<span class="present-tag">${to}</span>` : to;
                 let technologiesString = "";
@@ -116,7 +115,6 @@
             <h2 class="bold-text spacer-2 align-right">Education</h2>
             <span></span>
             ${educations
-              .reverse()
               .map(
                 ({ course, school, from, to }) => `
                 <h3 class="small-text align-right">Course / Program</h3>
