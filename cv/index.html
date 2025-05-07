@@ -7,14 +7,12 @@
     <title>Curriculum Vitae for Ragnar Axberg</title>
     <link href="../styling.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    <script src="../assets/src/data/workplaces.js"></script>
-    <script src="../assets/src/data/educations.js"></script>
     <script src="../assets/src/data/my-info.js"></script>
   </head>
   <body>
     <script>
       document.addEventListener("DOMContentLoaded", () => {
-        const languages = myInfo.languages.map((lang) => ({
+        const languages = ragnar.languages.map((lang) => ({
           name: new Intl.DisplayNames([lang.code], { type: "language" }),
           level: lang.level === "basic-understanding" ? "Basic understanding" : "Fluent",
         }));
@@ -26,34 +24,34 @@
             <h2 class="bold-text spacer-2 align-right">General information</h2>
             <span></span>
             <h3 class="small-text align-right">About</h3>
-            ${marked.parse(myInfo.about)}
+            ${marked.parse(ragnar.about)}
             <span></span>
             <span></span>
             <h3 class="small-text align-right">Telephone</h3>
-            <p class="small-text"><a href="tel:${myInfo.telephone}">${myInfo.telephone}</a></p>
+            <p class="small-text"><a href="tel:${ragnar.telephone}">${ragnar.telephone}</a></p>
             <h3 class="small-text align-right">Email</h3>
             <p class="small-text">
-              <a href="mailto:${myInfo.email}">${myInfo.email}</a>
+              <a href="mailto:${ragnar.email}">${ragnar.email}</a>
             </p>
             <h3 class="small-text align-right">Nationality</h3>
-            <p class="small-text">${myInfo.nationality}</p>
+            <p class="small-text">${ragnar.nationality}</p>
 
             <h3 class="small-text align-right">Date of Birth</h3>
             <p class="small-text">${
-              new Date(myInfo.timestamp * 1000).toISOString().split("T")[0]
+              new Date(ragnar.timestamp * 1000).toISOString().split("T")[0]
             }</p>
             <h3 class="small-text align-right">Gender</h3>
-            <p class="small-text">${myInfo.gender}</p>
+            <p class="small-text">${ragnar.gender}</p>
             <h3 class="small-text align-right">Home town</h3>
             <p class="small-text">
-              <a href="https://youtu.be/F9urjA_xdfc?t=1295" target="_blank">${myInfo.city}</a>
+              <a href="https://youtu.be/F9urjA_xdfc?t=1295" target="_blank">${ragnar.city}</a>
             </p>
             <span>&nbsp;</span><span>&nbsp;</span>
             <h2 class="bold-text spacer-2 align-right">Work experience</h2>
             <span></span>
             <h3 class="small-text align-right">Previous Roles</h3>
             <ul>
-              ${myInfo.roles.map((role) => `<li class="spacer-2 small-text">${role}</li>`).join("")}
+              ${ragnar.roles.map((role) => `<li class="spacer-2 small-text">${role}</li>`).join("")}
             </ul>
             <h2 class="bold-text spacer-2 align-right">Selection of previous jobs</h2>
             <span></span>
