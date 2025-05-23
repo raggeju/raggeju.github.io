@@ -109,7 +109,7 @@ const workplaces = [
     from: "April 2015",
     to: "December 2015",
     about:
-      "Developed **campaign websites** for ELS Campaign, **bonus club websites** for HD and Sydsvenskan, **food ordering websites** for LetUsEat and**work tracking apps** for CheckEasy and TrackEasy.",
+      "Developed **campaign websites** for ELS Campaign, **bonus club websites** for HD and Sydsvenskan, **food ordering websites** for LetUsEat and **work tracking apps** for CheckEasy and TrackEasy.",
     technologies: [
       "AngularJS",
       "PHP",
